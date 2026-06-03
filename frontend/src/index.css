@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* Реєстрація кастомної інженерної палітри в дизайн-системі */
+@theme {
+  --color-bg-main: #0a0f0d;
+  --color-bg-card: #0d1a14;
+  --color-bg-card-hover: #132920;
+  --color-border-color: #1a3a2a;
+  --color-accent-primary: #00e5a0;
+  --color-accent-secondary: #00c2ff;
+  --color-text-main: #e8eeeb;
+  --color-text-muted: #5a7a6a;
+  --color-danger: #ff3b5c;
+  --color-warning: #ffb800;
+}
+
+/* Нативні змінні для ванільних CSS компонентів */
+:root {
+  --bg-main: #0a0f0d;
+  --bg-card: #0d1a14;
+  --bg-card-hover: #132920;
+  --border-color: #1a3a2a;
+  --accent-primary: #00e5a0;
+  --accent-secondary: #00c2ff;
+  --text-main: #e8eeeb;
+  --text-muted: #5a7a6a;
+  --color-danger: #ff3b5c;
+  --color-warning: #ffb800;
+}
+
+* {
+  box-shadow: none;
+  font-family: "Inter", sans-serif;
+}
+
+/* Накладання суворих різких кутів на всі елементи UI */
+button,
+input,
+select,
+div,
+table,
+tr,
+th,
+td {
+  border-radius: 2px !important;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* Тонкий скролбар */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Інверсія шарів карти Leaflet  */
+.leaflet-container {
+  background: var(--bg-main) !important;
+  border: 1px solid var(--border-color) !important;
+}
+.leaflet-tile-container img {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)
+    saturate(70%) !important;
+}
+
+/* Геопросторові поп-апи карти */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Глобальні класи системної анімації */
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(0, 229, 160, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 229, 160, 0.25);
+  }
+}
+.animate-glow {
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-sys-fade {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Фікс накладання шарів інтерактивної карти на елементи кошика та меню */
+.leaflet-container {
+  z-index: 1 !important;
+}
+.leaflet-pane {
+  z-index: 1 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 2 !important;
+}
