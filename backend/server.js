@@ -552,11 +552,9 @@ app.post(
           .status(400)
           .json({ error: "🚨 Немає вільних БПЛА для цього ресторану!" });
       if (total_weight > drone.max_payload_g)
-        return res
-          .status(400)
-          .json({
-            error: `🚨 Перевищено ліміт вантажопідйомності дрона (${drone.max_payload_g} г)!`,
-          });
+        return res.status(400).json({
+          error: `🚨 Перевищено ліміт вантажопідйомності дрона (${drone.max_payload_g} г)!`,
+        });
 
       const restaurant = await Restaurant.findByPk(restaurant_id);
       const startCoords = [restaurant.location.lat, restaurant.location.lng];
@@ -577,11 +575,9 @@ app.post(
 
       const usableBattery = drone.battery_level - 20;
       if (usableBattery <= 0)
-        return res
-          .status(400)
-          .json({
-            error: `🚨 Борт розряджений (${drone.battery_level}%). Зліт заблоковано.`,
-          });
+        return res.status(400).json({
+          error: `🚨 Борт розряджений (${drone.battery_level}%). Зліт заблоковано.`,
+        });
 
       const maxAllowedDistance = (usableBattery / 80) * 15000;
       if (totalRoundTripDistance > maxAllowedDistance)
@@ -598,11 +594,9 @@ app.post(
         startCoords[1]
       );
       if (!weatherStatus.isSafe)
-        return res
-          .status(400)
-          .json({
-            error: `☁️ Погодні умови несприятливі: ${weatherStatus.reason}`,
-          });
+        return res.status(400).json({
+          error: `☁️ Погодні умови несприятливі: ${weatherStatus.reason}`,
+        });
 
       await drone.update({ status: "flying" });
 
@@ -667,12 +661,10 @@ app.post(
         return res.status(404).json({ error: "Замовлення не знайдено" });
 
       if (!["flying", "en_route", "delivering"].includes(order.status)) {
-        return res
-          .status(400)
-          .json({
-            error:
-              "Місію неможливо скасувати — вона вже завершена або не активна",
-          });
+        return res.status(400).json({
+          error:
+            "Місію неможливо скасувати — вона вже завершена або не активна",
+        });
       }
 
       const mission = order.Mission;

@@ -1,15 +1,15 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
-// Налаштування підключення до PostgreSQL
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.POSTGRES_DB,
+  process.env.POSTGRES_USER,
+  process.env.POSTGRES_PASSWORD,
   {
-    host: process.env.DB_HOST,
+    host: process.env.DB_HOST || "localhost",
+    port: process.env.DB_PORT || 5432,
     dialect: "postgres",
-    logging: false, // щоб термінал не засмічувався SQL-запитами
+    logging: false,
   }
 );
 
